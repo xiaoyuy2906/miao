@@ -300,12 +300,12 @@
 
   function bezierPlot(pgroups) {
     for (var t = 0; t <= 1; t += 0.0001) {
-      dot(bezierPoints(pgroups, t)[0][0], bezierPoints(pgroups, t)[0][1], t)
+      dot(bezierPoints(pgroups, t)[0][0], bezierPoints(pgroups, t)[0][1], "blue")
     }
   }
 
   //pgroups是一个大数组，包含多个点[[a1,b1],[a2,b2],[a3,b3],[a4,b4],[a5,b5],...]
-  var bezier3 = function (p0, p1, p2, p3, p4) {
+  var bezier3 = function (p0, p1, p2, p3) {
     for (var t = 0; t <= 1; t += 0.0001) {
       const x1 = position(p0, p1, t)
       const x2 = position(p1, p2, t)
@@ -317,8 +317,8 @@
     }
 
   }//画一个贝塞尔曲线（二阶或三阶均可，二阶由三个点确定，三阶由四个点确定）
-  bezier3([0, 0], [50, 700], [680, 50], [450, 860], [20, 660])
-  bezierPlot([[0, 0], [50, 700], [680, 50], [450, 860], [20, 660]])
+  bezier3([0, 0], [50, 700], [680, 50], [450, 860])
+  bezierPlot([[0, 0], [50, 700], [680, 50], [450, 860]])
 
 
   function line(x1, y1, x2, y2) {

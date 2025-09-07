@@ -1343,7 +1343,7 @@ sqrt: 输入一个数，求它的平方根，精确到小数点后3位，不能�
     console.log(char)
 </script>
 
-<script>
+<script id="prime" type="xtext/javascript">
     var countPrimes = function (n) {
         function isPrime(x) {
             if (x == 0 || x == 1) {
@@ -1367,4 +1367,104 @@ sqrt: 输入一个数，求它的平方根，精确到小数点后3位，不能�
 
         return count
     }
+</script>
+
+
+
+<script id="itob" type="xtext/javascript">
+    function number2String(n) {
+        /*         if (n == 0) return "0";
+                if (n == 1) return "1";
+                if (n == 2) return "2";
+                if (n == 3) return "3";
+                if (n == 4) return "4";
+                if (n == 5) return "5";
+                if (n == 6) return "6";
+                if (n == 7) return "7";
+                if (n == 8) return "8";
+                if (n == 9) return "9"; */
+
+
+        return String.fromCharCode(n + 48)
+
+    }
+
+    function integer2String(n) {
+        var string = ""
+        while (n > 0) {
+            var digit = n % 10
+            n = (n - digit) / 10
+            string = number2String(digit) + string
+        }
+        return string
+    }
+</script>
+
+
+<script id="weekday" type="text/javascript">
+    function isLeapYear(x) {
+        return (x % 4 == 0 && x % 100 != 0 || x % 400 == 0)
+    }
+
+    function daysOfMonth(y, m) {
+        switch (m) {
+            case 1: return 31;
+            case 3: return 31;
+            case 5: return 31;
+            case 7: return 31;
+            case 8: return 31;
+            case 10: return 31;
+            case 12: return 31;
+            case 2: if (isLeapYear(y)) {
+                return 29
+            } else {
+                return 28
+            }
+            default: return 30;
+        }
+    }
+
+    function weekday(year, month, day) {
+        let totalDays = 0
+        for (let y = 1; y < year; y++) {
+            if (isLeapYear(y)) {
+                totalDays += 366
+            } else {
+                totalDays += 365
+            }
+        }
+        for (let m = 1; m < month; m++) {
+            totalDays += daysOfMonth(year, m)
+        }
+
+
+
+        if (arguments.length == 2) {
+            switch ((totalDays + 1) % 7) {
+                case 0: return "Sunday"
+                case 1: return "Monday"
+                case 2: return "Tuesday"
+                case 3: return "Wednesday"
+                case 4: return "Thursday"
+                case 5: return "Friday"
+                case 6: return "Saturday"
+            }
+        }
+        if (arguments.length == 3) {
+            totalDays += day
+            switch (totalDays % 7) {
+                case 0: return "Sunday"
+                case 1: return "Monday"
+                case 2: return "Tuesday"
+                case 3: return "Wednesday"
+                case 4: return "Thursday"
+                case 5: return "Friday"
+                case 6: return "Saturday"
+            }
+        }
+
+
+
+    }
+
 </script>
