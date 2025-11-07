@@ -1,4 +1,4 @@
-export var xiaoyuy2906 = {
+var xiaoyuy2906 = {
     compact: function (array) {
         /* return array.filter(item => item) */
 
@@ -140,3 +140,5 @@ export var xiaoyuy2906 = {
         return false
     }
 }
+
+// export { xiaoyuy2906 }
