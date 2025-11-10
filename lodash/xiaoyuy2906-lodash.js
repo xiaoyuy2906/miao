@@ -180,6 +180,61 @@ var xiaoyuy2906 = {
         }, {})
     },
 
+    toPairs: function (object) {
+        var result = []
+        for (var key in object) {
+            if (Object.prototype.hasOwnProperty.call(object, key)) {//避免原型链污染、方法覆盖、Object.create(null)没有原型 报错等问题
+                result.push([key, object[key]])
+            }
+        }
+        return result
+        //return Object.entries(object)
+    },
+
+    head: function (array) {
+        if (Array.isArray(array) && array.length >= 1) {
+            return array[0]
+        } else {
+            return undefined
+        }
+    },
+
+    indexOf: function (array, value, fromIndex = 0) {
+        if (Array.isArray(array) == false || array.length == 0 || fromIndex >= array.length) {
+            return -1
+        }
+        var minVaildFromIdx = fromIndex >= 0 ? fromIndex : Math.max(fromIndex + array.length, 0)
+        //如果 fromIndex 是负数，那么要从 array.length + fromIndex 开始找；但如果这个结果仍然 < 0，就从 0 开始
+        for (var i = minVaildFromIdx; i < array.length; i++) {
+            if (this.isEqual(array[i], value)) {
+                return i
+            }
+        }
+        return -1
+    },
+
+    lastIndexOf: function (array, value, fromIndex = array.length - 1) {
+        if (Array.isArray(array) == false || array.length == 0) {
+            return -1
+        }
+        var vaildFromIdx
+        if (fromIndex > array.length - 1) {
+            vaildFromIdx = array.length - 1
+        } else if (fromIndex <= array.length - 1 && fromIndex >= 0) {
+            vaildFromIdx = fromIndex
+        } else if (fromIndex + array.length >= 0) {
+            vaildFromIdx = fromIndex + array.length
+        } else {
+            return -1
+        }
+        for (var i = vaildFromIdx; i >= 0; i--) {
+            if (this.isEqual(array[i], value)) {
+                return i
+            }
+        }
+        return -1
+    },
+
 
     isEqual: function (object, other) {
         if (object === other) {//判断 string, boolean, undefined, null, regexp, number(不包含NaN)
