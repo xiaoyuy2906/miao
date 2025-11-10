@@ -92,6 +92,95 @@ var xiaoyuy2906 = {
         }
     },
 
+    findLastIndex: function (array, predicate, fromIndex = array.length - 1) {
+        if (typeof predicate == 'function') {
+            for (var i = fromIndex; i >= 0; i--) {
+                if (predicate(array[i])) {
+                    return i
+                }
+            }
+            return -1
+        }
+        if (typeof predicate == 'string') {
+            for (var i = fromIndex; i >= 0; i--) {
+                if (array[i][predicate]) {
+                    return i
+                }
+            }
+            return -1
+        }
+        if (typeof predicate == 'object') {
+            if (Array.isArray(predicate)) {
+                for (var i = fromIndex; i >= 0; i--) {
+                    if (array[i][predicate[0]] == predicate[1]) {
+                        return i
+                    }
+                }
+                return -1
+            } else {
+                for (var i = fromIndex; i >= 0; i--) {
+                    if (this.isEqual(array[i], predicate)) {
+                        return i
+                    }
+                }
+                return -1
+            }
+        }
+    },
+
+    flatten: function (array) {//Flattens array a single level deep
+        return array.reduce((acc, cur) => {
+            if (Array.isArray(cur)) {
+                // acc = acc.concat(cur)   // 重新创建并替换 acc
+                acc.push(...cur)        //它直接修改 acc 本身，不会创建新数组
+            } else {
+                acc.push(cur)
+            }
+            return acc
+        }, [])
+    },
+
+    flattenDeep: function (array) {//Recursively flattens array
+        // var result = []
+        // for (var i = 0; i < array.length; i++) {
+        //     if (Array.isArray(array[i])) {
+        //         result.push(...this.flattenDeep(array[i]))
+        //     } else {
+        //         result.push(array[i])
+        //     }
+        // }
+        // return result
+
+        return array.reduce((acc, cur) => {
+            Array.isArray(cur) ? acc.push(...this.flattenDeep(cur)) : acc.push(cur)
+            return acc
+        }, [])//高阶函数写法
+    },
+
+    flattenDepth: function (array, depth = 1) {
+        return array.reduce((acc, cur) => {
+            (Array.isArray(cur) && depth > 0) ? acc.push(...this.flattenDepth(cur, depth - 1)) : acc.push(cur)
+            return acc
+        }, [])
+
+        // return array.reduce((acc, cur) => {
+        //     if (Array.isArray(cur) && depth > 0) {
+        //         return acc.concat(flattenDepth(cur, depth - 1))
+        //     } else {
+        //         // 关键：若 cur 可能是数组且不应再展开，必须包一层
+        //         return Array.isArray(cur) ? acc.concat([cur]) : acc.concat(cur)
+        //     }
+        // }, [])
+    },
+
+    fromPairs: function (pairs) {//paris 是类似这样的数组[['a', 1], ['b', 2]]
+        return pairs.reduce((acc, cur) => {
+            acc[cur[0]] = cur[1]
+            return acc
+        }, {})
+    },
+
+
     isEqual: function (object, other) {
         if (object === other) {//判断 string, boolean, undefined, null, regexp, number(不包含NaN)
             return true
@@ -138,7 +227,7 @@ var xiaoyuy2906 = {
             }
         }
         return false
-    }
+    },
 }
 
 // export { xiaoyuy2906 }
