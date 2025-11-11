@@ -235,6 +235,31 @@ var xiaoyuy2906 = {
         return -1
     },
 
+    initial: function (array) {
+        var result = []
+        if (Array.isArray(array)) {
+            var myArray = Array.from(array)
+            var len = myArray.length
+            if (len > 1) {
+                for (var i = 0; i < len - 1; i++) {
+                    result.push(myArray[i])
+                }
+            }
+        }
+        return result
+    },
+
+    join: function (array, separator = ',') {
+        var myArray = Array.from(array).map((item) => item ?? '')
+        if (myArray.length == 0) {
+            return ''
+        }
+        if (myArray.length == 1) {
+            return '' + myArray[0]
+        }
+        return myArray.reduce((acc, cur) => acc += '' + separator + cur)
+    },
+
 
     isEqual: function (object, other) {
         if (object === other) {//判断 string, boolean, undefined, null, regexp, number(不包含NaN)
