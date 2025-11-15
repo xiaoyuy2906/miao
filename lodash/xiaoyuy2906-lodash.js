@@ -260,6 +260,75 @@ var xiaoyuy2906 = {
         return myArray.reduce((acc, cur) => acc += '' + separator + cur)
     },
 
+    last: function (array) {
+        if (Array.isArray(array)) {
+            return array[array.length - 1]
+        }
+    },
+
+    pull: function (array, ...values) {
+        return array.reduce((acc, cur) => {
+            if (!values.includes(cur)) {
+                acc.push(cur)
+            }
+            return acc
+        }, [])
+    },
+
+    reverse: function (array) {
+        // var result = []
+        // var myArr = [...array]
+        // for (var i = myArr.length; i >= 0; i--) {
+        //     result.push(myArr.pop())
+        // }
+        // return result   //返回了一个新的数组
+
+        const len = array.length
+        var temp
+        for (var i = 0; i < (len >> 1); i++) {
+            temp = array[i]
+            array[i] = array[len - 1 - i]
+            array[len - 1 - i] = temp
+        }
+        return array
+    },
+
+    every: function (collection, predicate = Boolean) {
+        if (typeof predicate == 'function') {
+            for (var key in collection) {
+                if (!predicate(collection[key], key, collection)) {
+                    return false
+                }
+            }
+            return true
+        }
+        if (typeof predicate == 'string') {
+            for (var key in collection) {
+                if (!collection[key][predicate]) {
+                    return false
+                }
+            }
+            return true
+        }
+        if (typeof predicate == 'object') {
+            if (Array.isArray(predicate)) {
+                for (var key in collection) {
+                    if (collection[key][predicate[0]] != predicate[1]) {
+                        return false
+                    }
+                }
+                return true
+            } else {
+                for (var key in collection) {
+                    if (!this.isEqual(collection[key], predicate)) {
+                        return false
+                    }
+                }
+                return true
+            }
+        }
+    },
+
 
     isEqual: function (object, other) {
         if (object === other) {//判断 string, boolean, undefined, null, regexp, number(不包含NaN)
@@ -310,4 +379,4 @@ var xiaoyuy2906 = {
     },
 }
 
-// export { xiaoyuy2906 }
+export { xiaoyuy2906 }
