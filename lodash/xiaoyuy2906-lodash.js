@@ -294,8 +294,9 @@ var xiaoyuy2906 = {
     },
 
     every: function (collection, predicate = Boolean) {
+        var keys = Object.keys(collection)
         if (typeof predicate == 'function') {
-            for (var key in collection) {
+            for (var key of keys) {
                 if (!predicate(collection[key], key, collection)) {
                     return false
                 }
@@ -303,7 +304,7 @@ var xiaoyuy2906 = {
             return true
         }
         if (typeof predicate == 'string') {
-            for (var key in collection) {
+            for (var key of keys) {
                 if (!collection[key][predicate]) {
                     return false
                 }
@@ -312,21 +313,72 @@ var xiaoyuy2906 = {
         }
         if (typeof predicate == 'object') {
             if (Array.isArray(predicate)) {
-                for (var key in collection) {
-                    if (collection[key][predicate[0]] != predicate[1]) {
+                for (var key of keys) {
+                    if (!this.isEqual(collection[key][predicate[0]], predicate[1])) {
                         return false
                     }
                 }
                 return true
             } else {
-                for (var key in collection) {
-                    if (!this.isEqual(collection[key], predicate)) {
+                for (var key of keys) {
+                    if (!this.isMatch(collection[key], predicate)) {
                         return false
                     }
                 }
                 return true
             }
         }
+    },
+
+    some: function (collection, predicate = Boolean) {
+        var keys = Object.keys(collection)
+        if (typeof predicate == 'function') {
+            for (var key of keys) {
+                if (predicate(collection[key], key, collection)) {
+                    return true
+                }
+            }
+            return false
+        }
+        if (typeof predicate == 'string') {
+            for (var key of keys) {
+                if (collection[key][predicate]) {
+                    return true
+                }
+            }
+            return false
+        }
+        if (typeof predicate == 'object') {
+            if (Array.isArray(predicate)) {
+                for (var key of keys) {
+                    if (this.isEqual(collection[key][predicate[0]], predicate[1])) {
+                        return true
+                    }
+                }
+                return false
+            } else {
+                for (var key of keys) {
+                    if (this.isMatch(collection[key], predicate)) {
+                        return true
+                    }
+                }
+                return false
+            }
+        }
+    },
+
+    isMatch: function (object, source) {
+        var sourceKeys = Object.keys(source)
+        var objectKeys = Object.keys(object)
+        for (var key of sourceKeys) {
+            if (!objectKeys.includes(key)) {
+                return false
+            }
+            if (!this.isEqual(object[key], source[key])) {
+                return false
+            }
+        }
+        return true
     },
 
 
