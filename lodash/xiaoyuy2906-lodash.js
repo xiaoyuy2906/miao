@@ -367,6 +367,30 @@ var xiaoyuy2906 = {
         }
     },
 
+    countBy: function (collection, iteratee) {
+        var values = Object.values(collection)
+        var result = {}
+        if (typeof iteratee == 'function') {
+            values.forEach(it => {
+                if (iteratee(it) in result) {
+                    result[iteratee(it)]++
+                } else {
+                    result[iteratee(it)] = 1
+                }
+            })
+        }
+        if (typeof iteratee == 'string') {
+            values.forEach(it => {
+                if (it[iteratee] in result) {
+                    result[it[iteratee]]++
+                } else {
+                    result[it[iteratee]] = 1
+                }
+            })
+        }
+        return result
+    },
+
     isMatch: function (object, source) {
         var sourceKeys = Object.keys(source)
         var objectKeys = Object.keys(object)
